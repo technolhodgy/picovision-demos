@@ -6,13 +6,13 @@
 #include "drivers/dv_display/dv_display.hpp"
 #include "libraries/pico_graphics/pico_graphics_dv.hpp"
 
-#define DISPLAY_WIDTH 640
-#define DISPLAY_HEIGHT 480
-#define FRAME_WIDTH 640
+#define DISPLAY_WIDTH 320
+#define DISPLAY_HEIGHT 240
+#define FRAME_WIDTH 1280
 #define FRAME_HEIGHT 720
 
 const int numModes = 12;
-int currentMode = 5;
+int currentMode = 0;
 int modeSelect =5;
 int modes[numModes][2] = {
    {320,240},
@@ -80,10 +80,10 @@ int main() {
       graphics.set_pen(BLACK);
       graphics.clear();
       
-      for (f = 0 ; f<DISPLAY_HEIGHT ; f++)
+      for (f = 0 ; f<FRAME_HEIGHT ; f++)
       {
          graphics.set_pen(graphics.create_pen(0,0,f /3 ));
-         graphics.pixel_span({0,f}, DISPLAY_WIDTH);
+         graphics.pixel_span({0,f}, FRAME_WIDTH);
          
       }
       graphics.set_pen(WHITE);
