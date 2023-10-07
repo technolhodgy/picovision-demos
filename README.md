@@ -7,7 +7,7 @@ https://github.com/pimoroni/picovision
 
 ###Demos
 
-- Screen mode setup and switching.
+- Screen mode setup and switching. (docs/screenmodes.md)
 - Scroll groups.
 - Buttons.
 - IO pins.
