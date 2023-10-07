@@ -12,7 +12,8 @@
 #define FRAME_HEIGHT 720
 
 const int numModes = 12;
-int modeSelect =0;
+int currentMode = 5;
+int modeSelect =5;
 int modes[numModes][2] = {
    {320,240},
    {360,240},
@@ -55,7 +56,7 @@ PicoGraphics_PenDV_RGB555 graphics(DISPLAY_WIDTH, DISPLAY_HEIGHT, display);
 
 Pen BLACK = graphics.create_pen(0, 0, 0);
 Pen WHITE = graphics.create_pen(255, 255, 255);
-int f,p;
+int f,p,w;
 char text[30];
 
 int main() {
@@ -72,7 +73,7 @@ int main() {
     display.init(DISPLAY_WIDTH, DISPLAY_HEIGHT, DVDisplay::MODE_RGB555, FRAME_WIDTH, FRAME_HEIGHT);
     printf("Done!\n");
 
-    graphics.set_font("bitmap8");
+    graphics.set_font("bitmap6");
 
     for (p = 0 ; p<2 ; p++)
     {
@@ -87,42 +88,90 @@ int main() {
       }
       graphics.set_pen(WHITE);
       graphics.text("Screen Mode Selector", Point(0, 0), FRAME_WIDTH);
-      display.flip();
-   }
     
+      graphics.set_pen(graphics.create_pen(32,32,32));               
+      graphics.rectangle({14,22,137,numModes*16+14});
+      display.flip();
+    }
     while(true) 
     {
       for (p = 0 ; p<2 ; p++)
       {
-         graphics.set_pen(graphics.create_pen(32,32,32));               
-         graphics.rectangle({16,33,128,numModes*20+8});
          for (f = 0; f<numModes;f++)
          {
             if ( f == modeSelect)
             {
-               graphics.set_pen(graphics.create_pen(32,32,192));               
-               if (!gpio_get(BUTTON_Y)) {
-                  graphics.set_pen(graphics.create_pen(32,192,32));    
+               graphics.set_pen(graphics.create_pen(32,32,192));  
+               
+               if (!gpio_get(BUTTON_Y) && currentMode != modeSelect)
+               {
+
+                  graphics.set_pen(graphics.create_pen(32,192,32));   
+                  graphics.rectangle({20,modeSelect*16+29,125,16});
+                  graphics.set_pen(WHITE);
+                  sprintf(text,"Mode Change");
+                  graphics.text(text, Point(24, modeSelect*16+30), FRAME_WIDTH);
+                  display.flip();
+                  graphics.set_pen(graphics.create_pen(32,192,32));   
+                  graphics.rectangle({20,modeSelect*16+29,125,16});
+                  graphics.set_pen(WHITE);
+                  sprintf(text,"Mode Change");
+                  graphics.text(text, Point(24, modeSelect*16+30), FRAME_WIDTH);
+                  display.flip();
+                  while (!gpio_get(BUTTON_Y)) // wait for button release
+                  {}
+                  sleep_ms(700);
+                  // Change screen resolutions here.
+                  // reset() & init()
+                  display.reset();
+                  display.init(modes[f][0], modes[f][1], DVDisplay::MODE_RGB555, FRAME_WIDTH, FRAME_HEIGHT);
+                  sleep_ms(1000);
+                  for (w =0;w<1000;w++)
+                  {
+                     graphics.set_pen(graphics.create_pen(32,192,32));   
+                     graphics.rectangle({20,modeSelect*16+29,125,16});
+                     graphics.set_pen(WHITE);
+                     sprintf(text,"OK - Hit Y %d",(int)(999-w)/100);
+                     graphics.text(text, Point(24, modeSelect*16+30), FRAME_WIDTH);
+                     display.flip();
+                     sleep_ms(10);
+                     
+                     if (!gpio_get(BUTTON_Y))
+                     {
+                        currentMode = modeSelect;  
+                        break;
+                     }
+                  }
+                  if (currentMode != modeSelect)
+                  {
+                     display.reset();
+                     display.init(modes[currentMode][0], modes[currentMode][1], DVDisplay::MODE_RGB555, FRAME_WIDTH, FRAME_HEIGHT);
+                  }                     
                }
             } else {
                graphics.set_pen(graphics.create_pen(96,96,96));
             }
-            graphics.rectangle({20,f*20+37,120,20});
+            graphics.rectangle({20,f*16+29,125,16});
             graphics.set_pen(WHITE);
             sprintf(text,"%i x %i",modes[f][0],modes[f][1]);
-            graphics.text(text, Point(30, f*20+40), FRAME_WIDTH);
+            graphics.text(text, Point(30, f*16+30), FRAME_WIDTH);
+            if ( f == currentMode)
+            {
+               graphics.text(">", Point(22, f*16+30), FRAME_WIDTH);
+               graphics.text("<", Point(137, f*16+30), FRAME_WIDTH);
+            }
          }
       display.flip();
       }
          if(display.is_button_a_pressed())
          {
-            modeSelect++;
+            modeSelect--;
             while(display.is_button_a_pressed())
             {}
          }
          if(display.is_button_x_pressed())
          {
-            modeSelect--;
+            modeSelect++;
             while(display.is_button_x_pressed())
             {}
          }
