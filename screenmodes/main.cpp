@@ -95,7 +95,7 @@ int main() {
       for (p = 0 ; p<2 ; p++)
       {
          graphics.set_pen(graphics.create_pen(32,32,32));               
-         graphics.rectangle({16,33,158,numModes*20+8});
+         graphics.rectangle({16,33,128,numModes*20+8});
          for (f = 0; f<numModes;f++)
          {
             if ( f == modeSelect)
@@ -107,7 +107,7 @@ int main() {
             } else {
                graphics.set_pen(graphics.create_pen(96,96,96));
             }
-            graphics.rectangle({20,f*20+37,150,20});
+            graphics.rectangle({20,f*20+37,120,20});
             graphics.set_pen(WHITE);
             sprintf(text,"%i x %i",modes[f][0],modes[f][1]);
             graphics.text(text, Point(30, f*20+40), FRAME_WIDTH);

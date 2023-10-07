@@ -20,23 +20,12 @@ include(picovision_import.cmake)
 include(common/pimoroni_i2c)
 include(common/pimoroni_bus)
 
-# Graphics stuff
-#include(drivers/dv_display/dv_display)
-#include(libraries/pico_graphics/pico_graphics)
-#include(libraries/pico_vector/pico_vector)
-
 include(libraries/jpegdec/jpegdec)
 include(libraries/pico_graphics/pico_graphics)
 
 # SD Card Access
 include(drivers/fatfs/fatfs)
 include(drivers/sdcard/sdcard)
-
-
-#target_include_directories(${NAME}
-#    ${CMAKE_CURRENT_LIST_DIR}
-#)
-
 
 add_subdirectory(screenmodes)
 add_subdirectory(buttons)
