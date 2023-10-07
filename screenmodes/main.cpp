@@ -52,7 +52,7 @@ Pixel-doubled Resolutions
 using namespace pimoroni;
 
 DVDisplay display;
-PicoGraphics_PenDV_RGB555 graphics(DISPLAY_WIDTH, DISPLAY_HEIGHT, display);
+PicoGraphics_PenDV_RGB555 graphics(FRAME_WIDTH, FRAME_HEIGHT, display);
 
 Pen BLACK = graphics.create_pen(0, 0, 0);
 Pen WHITE = graphics.create_pen(255, 255, 255);
