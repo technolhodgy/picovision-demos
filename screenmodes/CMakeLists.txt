@@ -23,7 +23,9 @@ pico_stdlib
     fatfs
     sdcard
 )
-
+target_compile_definitions(${NAME} PRIVATE
+    -DSUPPORT_WIDE_MODES=1
+)
 pico_enable_stdio_usb(${NAME} 1)
 
 # create map/bin/hex file etc.

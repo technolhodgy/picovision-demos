@@ -11,15 +11,17 @@
 #define FRAME_WIDTH 1280
 #define FRAME_HEIGHT 720
 
-const int numModes = 14;
+const int numModes = 16;
 int currentMode = 0;
-int modeSelect =5;
+int modeSelect =0;
 int modes[numModes][2] = {
    {320,240},
    {360,240},
    {360,288},
    {400,225},
    {400,240},
+   {400,300},
+   {460,270},
    {960,270},
    {640,480},
    {720,480},
@@ -75,7 +77,7 @@ int main() {
     display.init(DISPLAY_WIDTH, DISPLAY_HEIGHT, DVDisplay::MODE_RGB555, FRAME_WIDTH, FRAME_HEIGHT);
     printf("Done!\n");
 
-    graphics.set_font("bitmap6");
+    graphics.set_font("bitmap8");
 
     for (p = 0 ; p<2 ; p++)
     {
@@ -89,10 +91,10 @@ int main() {
          
       }
       graphics.set_pen(WHITE);
-      graphics.text("Screen Mode Selector", Point(0, 0), FRAME_WIDTH);
+      graphics.text("Screen Mode Selector", Point(0, 0), FRAME_WIDTH,1);
     
       graphics.set_pen(graphics.create_pen(32,32,32));               
-      graphics.rectangle({14,22,137,numModes*16+14});
+      graphics.rectangle({14,22,137,numModes*10+14});
       display.flip();
     }
     while(true) 
@@ -109,16 +111,16 @@ int main() {
                {
 
                   graphics.set_pen(graphics.create_pen(32,192,32));   
-                  graphics.rectangle({20,modeSelect*16+29,125,16});
+                  graphics.rectangle({20,modeSelect*10+29,125,10});
                   graphics.set_pen(WHITE);
                   sprintf(text,"Mode Change");
-                  graphics.text(text, Point(24, modeSelect*16+30), FRAME_WIDTH);
+                  graphics.text(text, Point(24, modeSelect*10+30), FRAME_WIDTH,1);
                   display.flip();
                   graphics.set_pen(graphics.create_pen(32,192,32));   
-                  graphics.rectangle({20,modeSelect*16+29,125,16});
+                  graphics.rectangle({20,modeSelect*10+29,125,10});
                   graphics.set_pen(WHITE);
                   sprintf(text,"Mode Change");
-                  graphics.text(text, Point(24, modeSelect*16+30), FRAME_WIDTH);
+                  graphics.text(text, Point(24, modeSelect*10+30), FRAME_WIDTH,1);
                   display.flip();
                   while (!gpio_get(BUTTON_Y)) // wait for button release
                   {}
@@ -131,10 +133,10 @@ int main() {
                   for (w =0;w<1000;w++)
                   {
                      graphics.set_pen(graphics.create_pen(32,192,32));   
-                     graphics.rectangle({20,modeSelect*16+29,125,16});
+                     graphics.rectangle({20,modeSelect*10+29,125,10});
                      graphics.set_pen(WHITE);
                      sprintf(text,"OK - Hit Y %d",(int)(999-w)/100);
-                     graphics.text(text, Point(24, modeSelect*16+30), FRAME_WIDTH);
+                     graphics.text(text, Point(24, modeSelect*10+30), FRAME_WIDTH,1);
                      display.flip();
                      sleep_ms(10);
                      
@@ -153,14 +155,14 @@ int main() {
             } else {
                graphics.set_pen(graphics.create_pen(96,96,96));
             }
-            graphics.rectangle({20,f*16+29,125,16});
+            graphics.rectangle({20,f*10+29,125,10});
             graphics.set_pen(WHITE);
             sprintf(text,"%i x %i",modes[f][0],modes[f][1]);
-            graphics.text(text, Point(30, f*16+30), FRAME_WIDTH);
+            graphics.text(text, Point(30, f*10+30), FRAME_WIDTH,1);
             if ( f == currentMode)
             {
-               graphics.text(">", Point(22, f*16+30), FRAME_WIDTH);
-               graphics.text("<", Point(137, f*16+30), FRAME_WIDTH);
+               graphics.text(">", Point(22, f*10+30), FRAME_WIDTH,1);
+               graphics.text("<", Point(137, f*10+30), FRAME_WIDTH,1);
             }
          }
       display.flip();
