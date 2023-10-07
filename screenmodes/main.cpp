@@ -11,21 +11,23 @@
 #define FRAME_WIDTH 1280
 #define FRAME_HEIGHT 720
 
-const int numModes = 12;
+const int numModes = 14;
 int currentMode = 0;
 int modeSelect =5;
 int modes[numModes][2] = {
    {320,240},
    {360,240},
    {360,288},
+   {400,225},
    {400,240},
    {960,270},
    {640,480},
    {720,480},
    {720,576},
    {800,450},
+   {800,480},
    {800,600},
-   {968,540},
+   {960,540},
    {1280,720}
 };
 
