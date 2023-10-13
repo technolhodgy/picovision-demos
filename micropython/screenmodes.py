@@ -1,3 +1,4 @@
+import gc
 import time
 import pngdec
 from picographics import PicoGraphics, PEN_RGB555, WIDESCREEN
@@ -71,12 +72,14 @@ GREEN    = display.create_pen(32,192,32)
 
 display.set_font("bitmap8")
 
+modechange =0
 
 while True:
     
    for p in range (2):
-      display.set_pen(0)
-      display.clear()
+      if modeChange == 0: 
+         display.set_pen(0)
+         display.clear()
       
       for f in range (720):
          display.set_pen(display.create_pen(0, 0, int(f/3)))
@@ -85,9 +88,17 @@ while True:
       display.set_pen(WHITE)
       display.text("Pimoroni Screen Mode Selector",0,0,300,1)
 
-      display.update()
+      if modeChange ==0 or modeChange >2:
+         display.update()
+   if modeChange >4:
+      modeChange =0
+
+   elif modeChange >2:
+      modeChange -=2
 
    while True:
+      if modeChange>2:
+          break
       if display.is_button_a_pressed():
          print("X is pressed")
          modeSelect -=1
@@ -103,37 +114,63 @@ while True:
          while display.is_button_x_pressed():
             m=0
 
-      display.set_pen(DARKGREY)
-      display.rectangle(14, 22, 137, numModes*10+14)
-      for f in range(numModes):
-         display.set_pen(GREY)
-         if  f == modeSelect:
-            if button_y.value():
-               display.set_pen(SKYBLUE)
-            else:
-               modeChange = 1
-               
-         display.rectangle(20,f*10+29,125,10)
-         display.set_pen(WHITE)
-         modeText ="{width:} x {height:}".format(width=modes[f][0],height=modes[f][1])
-         display.text(modeText,30,f*10+29,300,1)
-         if  currentMode == f:
-           display.text(">",22,f*10+29,300,1)
-           display.text("<",137,f*10+29,300,1)
+      for p in range (2):
 
-     
-      display.update()
-      if modeChange:
+         display.set_pen(DARKGREY)
+         display.rectangle(14, 22, 137, numModes*10+14)
+         for f in range(numModes):
+            display.set_pen(GREY)
+            if  f == modeSelect:
+               display.set_pen(SKYBLUE)
+               if button_y.value() == 0:
+                  if modeSelect != currentMode:
+                     modeChange = 3
+                     display.set_pen(GREEN)
+
+            display.rectangle(20,f*10+29,125,10)
+            display.set_pen(WHITE)
+            modeText ="{width:} x {height:}".format(width=modes[f][0],height=modes[f][1])
+            display.text(modeText,30,f*10+30,300,1)
+            
+            if  currentMode == f:
+               display.text(">",22,f*10+30,300,1)
+               display.text("<",137,f*10+30,300,1)
+
+         display.update()
+
+      if modeChange == 2:
+         for f in range(100):
+            display.set_pen(GREEN)
+            display.rectangle(20,modeSelect*10+29,125,10)
+            display.set_pen(WHITE)
+            display.text("OK - Hit Y {timeout:}".format(timeout=int((99-f)/10)),30,modeSelect*10+30,300,1)
+            display.update()
+            time.sleep(0.15)
+
+            if button_y.value() == 0:
+               break
+               modechange =0
+         if f >98:
+            del display
+            gc.collect()
+            display = PicoGraphics(PEN_RGB555,modes[currentMode][0],modes[currentMode][1], FRAME_WIDTH, FRAME_HEIGHT)
+         else:
+            currentMode = modeSelect
+         modeChange=5
+         
+      if modeChange ==1:
          display.set_pen(GREEN)
          display.rectangle(20,modeSelect*10+29,125,10)
-         display.rectangle(30,0,125,10)
          display.set_pen(WHITE)
-         display.text("Mode Change",30,modeSelect*10+29,300,1)
-         while button_y.value() == 0:
-             m=0
-             display.update()
-          
-      
-    
-    
-    
+         display.text("Mode Change",30,modeSelect*10+30,300,1)
+         display.update()
+         time.sleep(0.9)
+         
+             #dvdisplay.reset()
+         del display
+         gc.collect()
+         display = PicoGraphics(PEN_RGB555,modes[modeSelect][0],modes[modeSelect][1], FRAME_WIDTH, FRAME_HEIGHT)
+
+         modeChange=4
+            
+             
