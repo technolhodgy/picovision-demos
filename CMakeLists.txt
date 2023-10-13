@@ -29,3 +29,5 @@ include(drivers/sdcard/sdcard)
 
 add_subdirectory(screenmodes)
 add_subdirectory(buttons)
+add_subdirectory(drawing)
+add_subdirectory(picovision)

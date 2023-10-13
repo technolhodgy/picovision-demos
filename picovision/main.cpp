@@ -21,10 +21,10 @@ PicoGraphics_PenDV_RGB555 graphics(FRAME_WIDTH, FRAME_HEIGHT, display);
 Pen BLACK = graphics.create_pen(0, 0, 0);
 Pen WHITE = graphics.create_pen(255, 255, 255);
 
-const uint16_t maxStars = 1000;
+const uint16_t maxStars = 500;
 
-int f,x,y,z,p,s;
-float r;
+int f,x,y,z,p,i;
+float s,r;
 int distance =0;
 
 int height = 30;
@@ -67,23 +67,36 @@ int main() {
       for (f=0; f <maxStars;f++)
       {
          z =points[f][2];
-         x = (points[f][0])/((z+distance)%1000); //*((z+distance)));
-         y = (points[f][1])/((z+distance)%1000); //*((z+distance)));
+         i = (z+distance)%1000;
+         x = (points[f][0])/(i); //*((z+distance)));
+         y = (points[f][1])/(i); //*((z+distance)));
          
-            p = 250-((z+distance)%1000)/4; //250
-               
-            r=1.05;
-            graphics.set_pen(graphics.create_pen(p/5,p/5,p));
-            graphics.pixel(Point(x*r+320,y*r+240));
-            r=1.025;
-            graphics.set_pen(graphics.create_pen(p/5,p/5,p));
-            graphics.pixel(Point(x*r+320,y*r+240));
-            r=0.975;
-            graphics.set_pen(graphics.create_pen(p,p/5,p/5));
-            graphics.pixel(Point(x*r+320,y*r+240));
-            r=0.95;
-            graphics.set_pen(graphics.create_pen(p,p/5,p/5));
-            graphics.pixel(Point(x*r+320,y*r+240));
+            p = 250-(i)/4; //250
+            for (s = 1; s<6;s++)
+            {
+               r=1+(s/100);               
+               graphics.set_pen(graphics.create_pen(p,p/s,p/s));
+               graphics.pixel(Point(x*r+320,y*r+240));
+               r=1-(s/100);               
+               graphics.set_pen(graphics.create_pen(p/s,p/s,p));
+               graphics.pixel(Point(x*r+320,y*r+240));
+               /*r=1.03;
+               graphics.set_pen(graphics.create_pen(p/2,p/2,p));
+               graphics.pixel(Point(x*r+320,y*r+240));
+               r=1.015;
+               graphics.set_pen(graphics.create_pen(p/2,p/2,p));
+               graphics.pixel(Point(x*r+320,y*r+240));
+               r=0.985;
+               graphics.set_pen(graphics.create_pen(p,p/2,p/2));
+               graphics.pixel(Point(x*r+320,y*r+240));
+               r=0.97;
+               graphics.set_pen(graphics.create_pen(p,p/2,p/2));
+               graphics.pixel(Point(x*r+320,y*r+240));
+               r=0.95;
+               graphics.set_pen(graphics.create_pen(p,p/5,p/5));
+               graphics.pixel(Point(x*r+320,y*r+240));
+               */
+            }
 
             graphics.set_pen(graphics.create_pen(p,p,p));
             graphics.pixel(Point(x+320,y+240));
@@ -92,7 +105,7 @@ int main() {
       
       display.flip();
       sleep_ms(1);
-      distance-=4;
+      distance-=8;
       if (distance <0)
       {
          distance=999;
