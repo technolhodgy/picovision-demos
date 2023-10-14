@@ -4,16 +4,12 @@ import pngdec
 from picographics import PicoGraphics, PEN_RGB555, WIDESCREEN
 import random
 
-
-t_start = time.ticks_ms()
-
 DISPLAY_WIDTH = 320
 DISPLAY_HEIGHT = 240
 
 FRAME_WIDTH=1280
 FRAME_HEIGHT=720
 
-# Palette Colours - Full Colour
 PALETTE_COLOUR = [
     (0xff, 0xff, 0xff),
     (0x2f, 0x2c, 0x1e),
@@ -32,9 +28,11 @@ PALETTE_COLOUR = [
     (0xff, 0xff, 0xff),
     (0x3b, 0x32, 0x1d)
 ]
-
+# number of modes listed in array
 numModes = 16
+# current mode being dispalyed 
 currentMode = 0
+# mode which will be selected with the Y button
 modeSelect = 0
 modes = [
    (320,240,0),
@@ -167,7 +165,7 @@ while True:
          display.set_pen(RED)
          display.rectangle(20,modeSelect*10+29,125,10)
          display.set_pen(WHITE)
-         display.text("Unsuported",30,modeSelect*10+30,300,1)
+         display.text("Unsuported - Wide Only",30,modeSelect*10+30,300,1)
          display.update()
          modeChange =0
          time.sleep(0.25)
