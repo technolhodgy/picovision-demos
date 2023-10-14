@@ -10,24 +10,6 @@ DISPLAY_HEIGHT = 240
 FRAME_WIDTH=1280
 FRAME_HEIGHT=720
 
-PALETTE_COLOUR = [
-    (0xff, 0xff, 0xff),
-    (0x2f, 0x2c, 0x1e),
-    (0xff, 0x00, 0x29),
-    (0x41, 0x3d, 0x2e),
-    (0x50, 0x4a, 0x30),
-    (0x15, 0x68, 0x06),
-    (0x12, 0x75, 0x00),
-    (0x7f, 0x68, 0x03),
-    (0x1a, 0x88, 0x05),
-    (0x00, 0xbf, 0x00),
-    (0x8b, 0x8b, 0x8b),
-    (0xbf, 0x9c, 0x00),
-    (0x06, 0xdc, 0x06),
-    (0xdc, 0xb4, 0x06),
-    (0xff, 0xff, 0xff),
-    (0x3b, 0x32, 0x1d)
-]
 # number of modes listed in array
 numModes = 16
 # current mode being dispalyed 
@@ -54,7 +36,6 @@ modes = [
 ]
 
 display = PicoGraphics(PEN_RGB555, DISPLAY_WIDTH, DISPLAY_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT)
-png = pngdec.PNG(display)
 
 modeChange = 0
 button_y = machine.Pin(9, machine.Pin.IN, machine.Pin.PULL_UP)
@@ -154,6 +135,11 @@ while True:
                break
                modechange =0
          if f >98:
+            #this is a workaround for screenmode change crash between 400x??? modes or @ 800x???
+            #del display
+            #gc.collect()
+            #display = PicoGraphics(PEN_RGB555,modes[0][0],modes[0][1], FRAME_WIDTH, FRAME_HEIGHT)
+
             del display
             gc.collect()
             display = PicoGraphics(PEN_RGB555,modes[currentMode][0],modes[currentMode][1], FRAME_WIDTH, FRAME_HEIGHT)
@@ -178,7 +164,11 @@ while True:
          display.update()
          time.sleep(0.9)
          
-             #dvdisplay.reset()
+         #this is a workaround for screenmode change crash between 400x??? modes or @ 800x???
+         #del display
+         #gc.collect()
+         #display = PicoGraphics(PEN_RGB555,modes[0][0],modes[0][1], FRAME_WIDTH, FRAME_HEIGHT)
+
          del display
          gc.collect()
          display = PicoGraphics(PEN_RGB555,modes[modeSelect][0],modes[modeSelect][1], FRAME_WIDTH, FRAME_HEIGHT)
