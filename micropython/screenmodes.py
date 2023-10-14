@@ -13,11 +13,6 @@ DISPLAY_HEIGHT = 240
 FRAME_WIDTH=1280
 FRAME_HEIGHT=720
 
-#enable WIDESCREEN modes
-# 0 OFF #selection line will RED if WIDESCREEN 
-# 1 ON  #all modes will be available
-
-
 # Palette Colours - Full Colour
 PALETTE_COLOUR = [
     (0xff, 0xff, 0xff),
