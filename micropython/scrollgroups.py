@@ -34,7 +34,7 @@ pirateLogo = [
    0b0111000011111000,
    0b0111111111110000,
    0b0011111111100000,
-   0b0000111111000000,
+   0b0010111111000000,
    0b0000010011000000
     ]
 groupOffsets = [
@@ -127,8 +127,8 @@ def drawClouds(XPOS,YPOS,SIZE):
       display.rectangle(XPOS+10,YPOS+6,27,7)
     
 def drawLogo(s):
-   t = int(s/3)-170
-   x = t+15
+   t = int(s/3)-160
+   x = t+17
    y = 95
    p = int(s/5)%8
    display.set_pen(display.create_pen(PIRATE_PALETTE[p][0],PIRATE_PALETTE[p][1],PIRATE_PALETTE[p][2]))   
@@ -139,14 +139,14 @@ def drawLogo(s):
 
       
 def drawShip(s):
-   t = int(s/3)-170
+   t = int(s/3)-160
    #t = 100
    x = t
-   display.set_pen(LIGHTSKYBLUE)
-   display.rectangle(0,90,DISPLAY_WIDTH,50)
+   #display.set_pen(LIGHTSKYBLUE)
+   #display.rectangle(0,90,DISPLAY_WIDTH,50)
    display.set_pen(display.create_pen(128,32,12))
    display.polygon( (x+7,140),(x+4,132),(x+1,132),(t,115),(x+20,115),(x+22,120),(x+25,127),(x+87,127),(x+92,122),(x+107,122),(x+127,118),(x+107,127),(x+97,140) )
-   display.polygon( (x+1,120),(x+-3,96),(x,96),(x+1,120) )
+   display.polygon( (x+1,120),(x+-3,93),(x,93),(x+1,120) )
 
    
    display.rectangle(x+30,90,2,40)
@@ -156,9 +156,9 @@ def drawShip(s):
    display.polygon(
        (x+1,112),
        (x-1,93),
-       (x+16+(int(s/4)%4),93),
-       (x+16,102),
-       (x+16+(int(s/4)%3),112)  )
+       (x+19+(int(s/4)%4),93),
+       (x+19,102),
+       (x+20+(int(s/4)%3),112)  )
    
    display.set_pen(display.create_pen(220,220,220))
    display.rectangle(x+56,90,2+int(s/5)%4,2)
@@ -253,6 +253,9 @@ while True:
             display.set_scroll_group_offset(6,20-int(w/3),int (a/15)%24+250)
             display.set_scroll_group_offset(7,int(w/2),int (a/10)%24+350)
             #time.sleep(0.01)
+
+            display.set_pen(LIGHTSKYBLUE)
+            display.rectangle(0,90,DISPLAY_WIDTH,50)
 
             drawShip(s)
             drawLogo(s)
