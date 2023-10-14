@@ -13,7 +13,10 @@ DISPLAY_HEIGHT = 240
 FRAME_WIDTH=1280
 FRAME_HEIGHT=720
 
-
+#enable WIDESCREEN modes
+# 0 OFF #selection line will RED if WIDESCREEN 
+# 1 ON  #all modes will be available
+WIDESCREEN
 
 # Palette Colours - Full Colour
 PALETTE_COLOUR = [
@@ -39,22 +42,22 @@ numModes = 16
 currentMode = 0
 modeSelect = 0
 modes = [
-   (320,240),
-   (360,240),
-   (360,288),
-   (400,225),
-   (400,240),
-   (400,300),
-   (480,270),
-   (960,270),
-   (640,480),
-   (720,480),
-   (720,576),
-   (800,450),
-   (800,480),
-   (800,600),
-   (960,540),
-   (1280,720)
+   (320,240,0),
+   (360,240,0),
+   (360,288,0),
+   (400,225,1),
+   (400,240,1),
+   (400,300,1),
+   (480,270,1),
+   (960,270,1),
+   (640,480,0),
+   (720,480,0),
+   (720,576,0),
+   (800,450,1),
+   (800,480,1),
+   (800,600,1),
+   (960,540,1),
+   (1280,720,1)
 ]
 
 display = PicoGraphics(PEN_RGB555, DISPLAY_WIDTH, DISPLAY_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT)
@@ -68,6 +71,7 @@ WHITE    = display.create_pen(250, 250, 250)
 DARKGREY = display.create_pen(32,32,32)
 GREY     = display.create_pen(96,96,96)
 SKYBLUE  = display.create_pen(32,32,192)
+RED    = display.create_pen(192,32,32)
 GREEN    = display.create_pen(32,192,32)
 
 display.set_font("bitmap8")
@@ -95,6 +99,7 @@ while True:
 
    elif modeChange >2:
       modeChange -=2
+
 
    while True:
       if modeChange>2:
@@ -124,9 +129,13 @@ while True:
                display.set_pen(SKYBLUE)
                if button_y.value() == 0:
                   if modeSelect != currentMode:
-                     modeChange = 3
-                     display.set_pen(GREEN)
-
+                     if modes[f][2] and WIDESCREEN == 0:
+                        display.set_pen(RED)
+                        modeChange = -1
+                     else:
+                        modeChange = 3
+                        display.set_pen(GREEN)
+                        
             display.rectangle(20,f*10+29,125,10)
             display.set_pen(WHITE)
             modeText ="{width:} x {height:}".format(width=modes[f][0],height=modes[f][1])
@@ -137,6 +146,7 @@ while True:
                display.text("<",137,f*10+30,300,1)
 
          display.update()
+
 
       if modeChange == 2:
          for f in range(100):
@@ -157,7 +167,16 @@ while True:
          else:
             currentMode = modeSelect
          modeChange=5
-         
+
+      if modeChange ==-1:
+         display.set_pen(RED)
+         display.rectangle(20,modeSelect*10+29,125,10)
+         display.set_pen(WHITE)
+         display.text("Unsuported",30,modeSelect*10+30,300,1)
+         display.update()
+         modeChange =0
+         time.sleep(0.25)
+
       if modeChange ==1:
          display.set_pen(GREEN)
          display.rectangle(20,modeSelect*10+29,125,10)
