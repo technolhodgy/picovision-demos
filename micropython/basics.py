@@ -38,7 +38,7 @@ while True:
     # Display some text at
     # X=0
     # y= 95
-    # Lenght of 100 pixel ( this will wrapped at 100 crating multiplue line of not more than 100 pixls )
+    # Lenght of 100 pixel ( this will wrapped at 320 crating multiplue line of not more than 320 pixls )
     # Font size of 1
     display.text("AHOY THERE, This is all you need to get something basic working.",0,95,320,1)
     
