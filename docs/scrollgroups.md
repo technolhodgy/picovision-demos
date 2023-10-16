@@ -1,4 +1,4 @@
-# PicoVision Demos - Screenmodes
+# PicoVision Demos - Scroll Groups
 
 ###Setting up and changing Scroll Groups.
 
