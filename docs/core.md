@@ -2,7 +2,12 @@
 
 ###basic setup to get going.
 
-Bare Bones 'Ahoy There'.
+Bare Bones [AHOY THERE](/micropython/basic.py) example.
+
+Just a few lines of code to get you started with something diplayed.
+
+
+
 
 
 
