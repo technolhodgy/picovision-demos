@@ -4,7 +4,7 @@
 
 Bare Bones [AHOY THERE](/micropython/basics.py) example.
 
-Just a few lines of code to get you started with something diplayed.
+Just a few lines of code to get you started with something displayed.
 
 
 
