@@ -13,8 +13,8 @@ https://github.com/pimoroni/picovision
 ###Demos
 
 - [Screen mode setup and switching.](docs/screenmodes.md)
-- [Scroll groups.](docs/scrollgroups.md)
+- [Scroll Groups.](docs/scrollgroups.md)
 - [Buttons.](docs/buttons.md)
-- [IO pins.](io.md)
+- [IO Pins.](io.md)
 - [Sprites.](sprites.md)
 

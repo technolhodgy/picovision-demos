@@ -1,2 +1,6 @@
 build/*
 random_code/*
+drawing/*
+micropython/demo.py/*
+micropython/demo_logo.py/*
+
