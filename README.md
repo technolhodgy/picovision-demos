@@ -10,7 +10,7 @@ https://github.com/pimoroni/picovision
 
 - [picovision basics.](docs/core.md)
 
-###Demos
+### Demos
 
 - [Screen mode setup and switching.](docs/screenmodes.md)
 - [Scroll Groups.](docs/scrollgroups.md)
