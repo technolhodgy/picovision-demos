@@ -2,7 +2,7 @@
 Forked from Pimoroni/picovision-boilerplate.
 
 Here are some simple demo to show off some of the functions in picovision 
-http://)https://shop.pimoroni.com/products/picovision
+https://shop.pimoroni.com/products/picovision
 https://github.com/pimoroni/picovision
 
 
