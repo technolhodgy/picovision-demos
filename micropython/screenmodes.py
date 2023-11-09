@@ -9,7 +9,10 @@ DISPLAY_HEIGHT = 240
 FRAME_WIDTH = 1280
 FRAME_HEIGHT = 720
 
-COMPATIBILITY = True
+# COMPATIBILITY = True
+# for some hardware that will not display some modes,
+# for normal operation leave COMPATIBILITY = False
+COMPATIBILITY = False 
 
 # number of modes listed in array
 numModes = 16
@@ -144,17 +147,13 @@ while True:
             if f > 98:
                 del display
                 gc.collect()
-                if modes[modeSelect]:
-                    comply = True
-                else:
-                    comply = False
                 display = PicoGraphics(
                     PEN_RGB555,
                     modes[currentMode][0],
                     modes[currentMode][1],
                     FRAME_WIDTH,
                     FRAME_HEIGHT,
-                    maximum_compatibility=comply
+                    maximum_compatibility=modes[modeSelect][3]
                 )
             else:
                 currentMode = modeSelect
@@ -179,17 +178,13 @@ while True:
 
             del display
             gc.collect()
-            if modes[modeSelect]:
-                comply = True
-            else:
-                comply = False
             display = PicoGraphics(
                 PEN_RGB555,
                 modes[modeSelect][0],
                 modes[modeSelect][1],
                 FRAME_WIDTH,
                 FRAME_HEIGHT,
-                maximum_compatibility=comply
+                maximum_compatibility=modes[modeSelect][3]
             )
 
             modeChange = 4
