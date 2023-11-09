@@ -25,7 +25,7 @@ modes = [
     (400, 240, 1, False),
     (400, 300, 1, False),
     (480, 270, 1, False),
-    (960, 270, 1, False),
+    (960, 270, 1, COMPATIBILITY),
     (640, 480, 0, COMPATIBILITY),
     (720, 480, 0, COMPATIBILITY),
     (720, 576, 0, COMPATIBILITY),
@@ -33,7 +33,7 @@ modes = [
     (800, 480, 1, COMPATIBILITY),
     (800, 600, 1, COMPATIBILITY),
     (960, 540, 1, COMPATIBILITY),
-    (1280, 720, 1, False),
+    (1280, 720, 1, COMPATIBILITY),
 ]
 
 display = PicoGraphics(
@@ -144,13 +144,17 @@ while True:
             if f > 98:
                 del display
                 gc.collect()
+                if modes[modeSelect]:
+                    comply = True
+                else:
+                    comply = False
                 display = PicoGraphics(
                     PEN_RGB555,
                     modes[currentMode][0],
                     modes[currentMode][1],
                     FRAME_WIDTH,
                     FRAME_HEIGHT,
-                    maximum_compatibility=modes[modeSelect][True]
+                    maximum_compatibility=comply
                 )
             else:
                 currentMode = modeSelect
@@ -175,13 +179,17 @@ while True:
 
             del display
             gc.collect()
+            if modes[modeSelect]:
+                comply = True
+            else:
+                comply = False
             display = PicoGraphics(
                 PEN_RGB555,
                 modes[modeSelect][0],
                 modes[modeSelect][1],
                 FRAME_WIDTH,
                 FRAME_HEIGHT,
-                maximum_compatibility=modes[modeSelect][True]
+                maximum_compatibility=comply
             )
 
             modeChange = 4
