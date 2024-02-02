@@ -8,6 +8,8 @@ DISPLAY_HEIGHT = 240
 ## FRAME_WIDTH=640
 ## FRAME_HEIGHT=480
 
+using namespace pimoroni;
+
 # start the display with the PEN depth WIDTh and HEIGHT
 display = PicoGraphics(PEN_RGB555, DISPLAY_WIDTH, DISPLAY_HEIGHT)
 # Optionaly we could add the FRAME dimentions to this with the 2 extra parameters passed at the end.
@@ -15,7 +17,6 @@ display = PicoGraphics(PEN_RGB555, DISPLAY_WIDTH, DISPLAY_HEIGHT)
 
 # Lets set a bitmap font for text
 display.set_font("bitmap8")
-
 
 # define colours
 # this could be done directly in line
@@ -38,7 +39,7 @@ while True:
     # Display some text at
     # X=0
     # y= 95
-    # Lenght of 100 pixel ( this will wrapped at 320 crating multiplue line of not more than 320 pixls )
+    # Length of 100 pixel ( this will wrapped at 320 crating multiplue line of not more than 320 pixls )
     # Font size of 1
     display.text("AHOY THERE, This is all you need to get something basic working.",0,95,320,1)
     
